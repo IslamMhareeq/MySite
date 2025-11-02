@@ -15,9 +15,12 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio')
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('✓ MongoDB Atlas connected successfully'))
+  .catch(err => {
+    console.error('✗ MongoDB connection error:', err.message);
+    process.exit(1);
+  });
 
 // Define Schemas
 const aboutSchema = new mongoose.Schema({
