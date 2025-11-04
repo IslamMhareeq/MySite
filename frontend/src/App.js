@@ -6,7 +6,10 @@ export default function Portfolio() {
   const [activeSection, setActiveSection] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Portfolio Data - Stored in Frontend
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [activeSection]);
+
   const portfolioData = {
     about: {
       name: 'Islam Mhareeq',
@@ -99,22 +102,22 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+    <div className="app-container">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-b border-slate-700">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+      <nav className="navbar">
+        <div className="nav-container">
+          <h1 className="logo">
             {portfolioData.about.name}
           </h1>
           
           <button 
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2"
+            className="menu-button"
           >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            {menuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
 
-          <ul className={`${menuOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row gap-6 absolute md:static top-16 left-0 right-0 md:top-auto bg-slate-900 md:bg-transparent p-4 md:p-0 w-full md:w-auto`}>
+          <ul className={`nav-menu ${menuOpen ? 'active' : ''}`}>
             {['home', 'projects', 'experience', 'education', 'contact'].map(section => (
               <li key={section}>
                 <button
@@ -122,13 +125,9 @@ export default function Portfolio() {
                     setActiveSection(section);
                     setMenuOpen(false);
                   }}
-                  className={`capitalize font-medium transition ${
-                    activeSection === section
-                      ? 'text-cyan-400'
-                      : 'text-slate-300 hover:text-cyan-400'
-                  }`}
+                  className={`nav-link ${activeSection === section ? 'active' : ''}`}
                 >
-                  {section}
+                  {section.charAt(0).toUpperCase() + section.slice(1)}
                 </button>
               </li>
             ))}
@@ -137,28 +136,25 @@ export default function Portfolio() {
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 py-12">
+      <main className="main-content">
         {/* Home Section */}
         {activeSection === 'home' && (
-          <section className="space-y-8 animate-fadeIn">
-            <div className="space-y-6">
-              <h2 className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          <section className="section home-section">
+            <div className="hero-content">
+              <h2 className="section-title">
                 {portfolioData.about.title}
               </h2>
-              <p className="text-xl text-slate-300 leading-relaxed max-w-3xl">
+              <p className="bio-text">
                 {portfolioData.about.bio}
               </p>
             </div>
 
             {/* Skills */}
-            <div className="space-y-4">
-              <h3 className="text-2xl font-bold">Skills & Technologies</h3>
-              <div className="flex flex-wrap gap-3">
+            <div className="skills-section">
+              <h3>Skills & Technologies</h3>
+              <div className="skills-container">
                 {portfolioData.about.skills.map((skill, idx) => (
-                  <span
-                    key={idx}
-                    className="px-4 py-2 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-full text-cyan-400 hover:from-cyan-500/20 hover:to-blue-500/20 transition"
-                  >
+                  <span key={idx} className="skill-badge">
                     {skill}
                   </span>
                 ))}
@@ -166,13 +162,13 @@ export default function Portfolio() {
             </div>
 
             {/* Social Links */}
-            <div className="flex gap-6 pt-6">
+            <div className="social-links">
               {portfolioData.about.socialLinks.github && (
                 <a
                   href={portfolioData.about.socialLinks.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 rounded-lg font-medium transition transform hover:scale-105"
+                  className="btn btn-primary"
                 >
                   <Github size={20} /> GitHub
                 </a>
@@ -182,7 +178,7 @@ export default function Portfolio() {
                   href={portfolioData.about.socialLinks.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 rounded-lg font-medium transition transform hover:scale-105"
+                  className="btn btn-secondary"
                 >
                   <Linkedin size={20} /> LinkedIn
                 </a>
@@ -193,39 +189,33 @@ export default function Portfolio() {
 
         {/* Projects Section */}
         {activeSection === 'projects' && (
-          <section className="space-y-8 animate-fadeIn">
-            <h2 className="text-4xl font-bold">Featured Projects</h2>
-            <div className="grid md:grid-cols-2 gap-6">
+          <section className="section projects-section">
+            <h2 className="section-title">Featured Projects</h2>
+            <div className="projects-grid">
               {portfolioData.projects.map((project, idx) => (
-                <div
-                  key={idx}
-                  className="group bg-slate-800/50 backdrop-blur border border-slate-700 hover:border-cyan-500/50 rounded-lg overflow-hidden transition transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20"
-                >
+                <div key={idx} className="project-card">
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-48 object-cover group-hover:opacity-75 transition"
+                    className="project-image"
                   />
-                  <div className="p-6 space-y-4">
-                    <h3 className="text-xl font-bold">{project.title}</h3>
-                    <p className="text-slate-300 text-sm leading-relaxed">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
+                  <div className="project-content">
+                    <h3 className="project-title">{project.title}</h3>
+                    <p className="project-description">{project.description}</p>
+                    <div className="project-tags">
                       {project.tags.map((tag, i) => (
-                        <span
-                          key={i}
-                          className="text-xs px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-full"
-                        >
+                        <span key={i} className="tag">
                           {tag}
                         </span>
                       ))}
                     </div>
-                    <div className="flex gap-3 pt-2">
+                    <div className="project-links">
                       {project.link !== '#' && (
                         <a
                           href={project.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 text-center py-2 bg-cyan-500 hover:bg-cyan-600 rounded text-sm font-medium transition"
+                          className="btn-small btn-view"
                         >
                           View
                         </a>
@@ -235,7 +225,7 @@ export default function Portfolio() {
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 text-center py-2 border border-cyan-500 text-cyan-400 hover:bg-cyan-500/10 rounded text-sm font-medium transition"
+                          className="btn-small btn-code"
                         >
                           Code
                         </a>
@@ -250,24 +240,21 @@ export default function Portfolio() {
 
         {/* Experience Section */}
         {activeSection === 'experience' && (
-          <section className="space-y-8 animate-fadeIn">
-            <h2 className="text-4xl font-bold">Experience</h2>
-            <div className="space-y-6">
+          <section className="section experience-section">
+            <h2 className="section-title">Experience</h2>
+            <div className="cards-container">
               {portfolioData.experience.map((exp, idx) => (
-                <div
-                  key={idx}
-                  className="bg-slate-800/50 backdrop-blur border border-slate-700 hover:border-cyan-500/50 rounded-lg p-6 transition hover:shadow-lg hover:shadow-cyan-500/10"
-                >
-                  <div className="flex justify-between items-start mb-3">
+                <div key={idx} className="card">
+                  <div className="card-header">
                     <div>
-                      <h3 className="text-xl font-bold text-cyan-400">{exp.position}</h3>
-                      <p className="text-blue-400 font-medium">{exp.company}</p>
+                      <h3 className="card-title">{exp.position}</h3>
+                      <p className="card-subtitle">{exp.company}</p>
                     </div>
-                    <span className="text-sm text-slate-400">
+                    <span className="card-date">
                       {exp.startDate} - {exp.endDate || 'Present'}
                     </span>
                   </div>
-                  <p className="text-slate-300 leading-relaxed">{exp.description}</p>
+                  <p className="card-description">{exp.description}</p>
                 </div>
               ))}
             </div>
@@ -276,24 +263,21 @@ export default function Portfolio() {
 
         {/* Education Section */}
         {activeSection === 'education' && (
-          <section className="space-y-8 animate-fadeIn">
-            <h2 className="text-4xl font-bold">Education</h2>
-            <div className="space-y-6">
+          <section className="section education-section">
+            <h2 className="section-title">Education</h2>
+            <div className="cards-container">
               {portfolioData.education.map((edu, idx) => (
-                <div
-                  key={idx}
-                  className="bg-slate-800/50 backdrop-blur border border-slate-700 hover:border-cyan-500/50 rounded-lg p-6 transition hover:shadow-lg hover:shadow-cyan-500/10"
-                >
-                  <div className="flex justify-between items-start mb-3">
+                <div key={idx} className="card">
+                  <div className="card-header">
                     <div>
-                      <h3 className="text-xl font-bold text-cyan-400">
+                      <h3 className="card-title">
                         {edu.degree} in {edu.field}
                       </h3>
-                      <p className="text-blue-400 font-medium">{edu.school}</p>
+                      <p className="card-subtitle">{edu.school}</p>
                     </div>
-                    <span className="text-sm text-slate-400">{edu.graduationYear}</span>
+                    <span className="card-date">{edu.graduationYear}</span>
                   </div>
-                  <p className="text-slate-300 leading-relaxed">{edu.description}</p>
+                  <p className="card-description">{edu.description}</p>
                 </div>
               ))}
             </div>
@@ -302,33 +286,33 @@ export default function Portfolio() {
 
         {/* Contact Section */}
         {activeSection === 'contact' && (
-          <section className="space-y-8 animate-fadeIn">
-            <h2 className="text-4xl font-bold">Get In Touch</h2>
-            <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-lg p-8 max-w-2xl space-y-6">
-              <div className="flex items-center gap-4">
-                <Mail className="text-cyan-400" size={24} />
+          <section className="section contact-section">
+            <h2 className="section-title">Get In Touch</h2>
+            <div className="contact-card">
+              <div className="contact-item">
+                <Mail className="contact-icon" size={24} />
                 <div>
-                  <p className="text-slate-400 text-sm">Email</p>
+                  <p className="contact-label">Email</p>
                   <a
                     href={`mailto:${portfolioData.about.email}`}
-                    className="text-cyan-400 font-medium hover:text-cyan-300 transition"
+                    className="contact-link"
                   >
                     {portfolioData.about.email}
                   </a>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <Phone className="text-cyan-400" size={24} />
+              <div className="contact-item">
+                <Phone className="contact-icon" size={24} />
                 <div>
-                  <p className="text-slate-400 text-sm">Phone</p>
-                  <p className="text-cyan-400 font-medium">{portfolioData.about.phone}</p>
+                  <p className="contact-label">Phone</p>
+                  <p className="contact-text">{portfolioData.about.phone}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <MapPin className="text-cyan-400" size={24} />
+              <div className="contact-item">
+                <MapPin className="contact-icon" size={24} />
                 <div>
-                  <p className="text-slate-400 text-sm">Location</p>
-                  <p className="text-cyan-400 font-medium">{portfolioData.about.location}</p>
+                  <p className="contact-label">Location</p>
+                  <p className="contact-text">{portfolioData.about.location}</p>
                 </div>
               </div>
             </div>
@@ -337,28 +321,9 @@ export default function Portfolio() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-700 bg-slate-900/50 mt-12">
-        <div className="max-w-6xl mx-auto px-4 py-8 text-center text-slate-400">
-          <p>&copy; 2024 {portfolioData.about.name}. All rights reserved.</p>
-        </div>
+      <footer className="footer">
+        <p>&copy; 2024 {portfolioData.about.name}. All rights reserved.</p>
       </footer>
-
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-fadeIn {
-          animation: fadeIn 0.5s ease-out;
-        }
-      `}</style>
     </div>
   );
 }
