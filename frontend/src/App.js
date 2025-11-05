@@ -35,33 +35,25 @@ export default function Portfolio() {
       {
         title: 'EduLink – Educational Networking Platform',
         description: 'Built authentication system and profile management features with job & workshop boards supporting 300+ active users. Designed modal-based issue reporting system and deployed on Heroku with auto-scaling capabilities for seamless performance.',
-        image: 'https://via.placeholder.com/400x300?text=EduLink+Platform',
         tags: ['Node.js', 'Express', 'MongoDB', 'EJS', 'Bootstrap', 'Heroku'],
-        link: 'https://edulink-platform.herokuapp.com',
         github: 'https://github.com/MahmoodAbuGneam/EduLink'
       },
       {
         title: 'CityFix – Urban Issue Tracker',
         description: 'Led backend refactor implementing Role-Based Access Control (RBAC) and GitHub Actions CI/CD pipeline. Integrated interactive Leaflet map enabling citizens to report, locate, and track urban infrastructure issues. Achieved 70% reduction in critical bugs.',
-        image: 'https://via.placeholder.com/400x300?text=CityFix+Tracker',
         tags: ['Flask', 'MongoDB', 'Leaflet.js', 'Docker', 'GitHub Actions', 'RBAC'],
-        link: 'https://cityfix-tracker.com',
         github: 'https://github.com/IslamMhareeq/CityFix'
       },
       {
         title: 'Smart Sprouts – Interactive Learning App',
         description: 'Developed gamified educational platform with math, Hebrew, and English content for first-grade students using JSON content pipeline architecture. Implemented reward system with in-game currency mechanics. User testing confirmed significant engagement increase.',
-        image: 'https://via.placeholder.com/400x300?text=Smart+Sprouts+App',
         tags: ['C#', '.NET', 'WinForms', 'Unity GUI', 'Gamification'],
-        link: '#',
         github: 'https://github.com/IslamMhareeq/The-smart-sprouts'
       },
       {
         title: 'Decentralized Marketplace (Capstone)',
         description: 'Developed smart contract with escrow and dispute resolution mechanisms deployed on Goerli testnet. Built responsive front-end using React and Web3.js for seamless blockchain interactions. Demonstrates understanding of distributed systems.',
-        image: 'https://via.placeholder.com/400x300?text=Decentralized+Marketplace',
         tags: ['Solidity', 'Truffle', 'React', 'Web3.js', 'Blockchain', 'Ethereum'],
-        link: '#',
         github: '#'
       }
     ],
