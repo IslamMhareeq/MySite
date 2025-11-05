@@ -186,11 +186,6 @@ export default function Portfolio() {
             <div className="projects-grid">
               {portfolioData.projects.map((project, idx) => (
                 <div key={idx} className="project-card">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="project-image"
-                  />
                   <div className="project-content">
                     <h3 className="project-title">{project.title}</h3>
                     <p className="project-description">{project.description}</p>
@@ -202,16 +197,6 @@ export default function Portfolio() {
                       ))}
                     </div>
                     <div className="project-links">
-                      {project.link !== '#' && (
-                        <a
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn-small btn-view"
-                        >
-                          View
-                        </a>
-                      )}
                       {project.github !== '#' && (
                         <a
                           href={project.github}
